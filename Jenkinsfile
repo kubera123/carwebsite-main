@@ -3,10 +3,9 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
+        stage('Clone') {
             steps {
-                git branch: 'main',
-                url: 'https://github.com/kubera123/carwebsite-main.git'
+                echo 'Cloning Repository'
             }
         }
 
@@ -18,7 +17,8 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh 'docker run -d -p 8081:80 --name carweb carwebsite'
+                sh 'docker rm -f carweb || true'
+                sh 'docker run -d -p 8080:80 --name carweb carwebsite'
             }
         }
     }
